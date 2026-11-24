@@ -108,11 +108,6 @@ export default defineConfig(() => {
           if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
             fs.cpSync(srcAssets, distAssets, {recursive: true, force: true});
           }
-          const docsDir = path.resolve(__dirname, 'docs');
-          if (fs.existsSync(distDir)) {
-            fs.rmSync(docsDir, {recursive: true, force: true});
-            fs.cpSync(distDir, docsDir, {recursive: true, force: true});
-          }
         },
       },
     ],

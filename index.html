@@ -34,20 +34,43 @@
   </head>
   <body class="bg-slate-50 text-slate-900 antialiased selection:bg-orange-600 selection:text-white">
     <div id="root"></div>
+    <script>
+      window.__ustalabErrors = [];
+      window.addEventListener('error', function (e) {
+        if (e && e.message) window.__ustalabErrors.push(e.message);
+      });
+      window.addEventListener('unhandledrejection', function (e) {
+        if (e && e.reason) window.__ustalabErrors.push(String(e.reason));
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
     <script>
       setTimeout(function () {
         var root = document.getElementById('root');
+        if (!root || root.children.length > 0) return;
+
         if (
-          root &&
-          root.children.length === 0 &&
           /github\.io$/i.test(location.hostname) &&
           !/\/docs(\/|$)/.test(location.pathname)
         ) {
-          var base = location.pathname.endsWith('/') ? location.pathname : location.pathname + '/';
+          var cleanPath = location.pathname.replace(/\/index\.html$/i, '');
+          var base = cleanPath.endsWith('/') ? cleanPath : cleanPath + '/';
           location.replace(base + 'docs/');
+          return;
         }
-      }, 800);
+
+        var errs = (window.__ustalabErrors || []).join(' | ');
+        root.innerHTML =
+          '<div style="max-width:460px;margin:48px auto;padding:24px;font-family:system-ui,sans-serif;background:#fff;border:1px solid #e2e8f0;border-radius:16px;color:#0f172a">' +
+          '<h2 style="margin:0 0 8px;font-size:18px;font-weight:700">Səhifə yüklənə bilmədi</h2>' +
+          '<p style="margin:0 0 12px;font-size:14px;color:#475569;line-height:1.5">' +
+          (location.protocol === 'file:'
+            ? 'Faylı birbaşa diskdən (file://) açdığınız üçün brauzer modulları bloklayır. Zəhmət olmasa GitHub Pages və ya lokal server üzərindən açın.'
+            : 'GitHub Pages ayarlarında <b>Deploy from a branch &rarr; /docs</b> və ya <b>GitHub Actions</b> seçdiyinizdən əmin olun.') +
+          '</p>' +
+          (errs ? '<pre style="font-size:12px;background:#f8fafc;padding:10px;border-radius:8px;overflow:auto;color:#b91c1c">' + errs.replace(/</g, '&lt;') + '</pre>' : '') +
+          '</div>';
+      }, 2000);
     </script>
   </body>
 </html>
