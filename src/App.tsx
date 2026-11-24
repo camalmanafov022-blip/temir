@@ -65,7 +65,7 @@ export default function App() {
 
   const handleSelectMobileTab = useCallback((tab: MobileTabId) => {
     setMobileTab(tab);
-    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 
   const fetchOrders = useCallback(async () => {

@@ -35,5 +35,19 @@
   <body class="bg-slate-50 text-slate-900 antialiased selection:bg-orange-600 selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      setTimeout(function () {
+        var root = document.getElementById('root');
+        if (
+          root &&
+          root.children.length === 0 &&
+          /github\.io$/i.test(location.hostname) &&
+          !/\/docs(\/|$)/.test(location.pathname)
+        ) {
+          var base = location.pathname.endsWith('/') ? location.pathname : location.pathname + '/';
+          location.replace(base + 'docs/');
+        }
+      }, 800);
+    </script>
   </body>
 </html>
