@@ -12,6 +12,7 @@ import {
   X,
 } from 'lucide-react';
 import { CATEGORY_LABELS } from '../data/services';
+import { diagnoseWithCamera } from '../lib/api';
 import { DiagnosticResult, ServiceCategoryId } from '../types';
 
 interface CameraDiagnosticsProps {
@@ -176,21 +177,12 @@ export function CameraDiagnostics({ onBookFromDiagnosis }: CameraDiagnosticsProp
     setDiagnosis(null);
 
     try {
-      const response = await fetch('/api/diagnose', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          imageBase64: base64Data,
-          mimeType,
-          categoryHint,
-          userNote: userNote.trim(),
-        }),
+      const data = await diagnoseWithCamera({
+        imageBase64: base64Data,
+        mimeType,
+        categoryHint,
+        userNote: userNote.trim(),
       });
-
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data?.error || 'Diaqnostika zamanı server xətası baş verdi.');
-      }
 
       setDiagnosis({
         ...data,

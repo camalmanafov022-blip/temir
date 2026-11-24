@@ -19,7 +19,8 @@ import { OrderForm } from './components/OrderForm';
 import { OrdersPanel } from './components/OrdersPanel';
 import { PWAInstallButton } from './components/PWAInstallButton';
 import { ServicesCatalog } from './components/ServicesCatalog';
-import { SERVICE_CATALOG } from './data/services';
+import { heroTechImg, SERVICE_CATALOG } from './data/services';
+import { fetchOrdersList, updateServiceOrderStatus } from './lib/api';
 import {
   DiagnosticResult,
   OrderStatus,
@@ -71,12 +72,8 @@ export default function App() {
     setOrdersLoading(true);
     setOrdersError(null);
     try {
-      const response = await fetch('/api/orders');
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data?.error || 'Sifarişlər yüklənə bilmədi.');
-      }
-      setOrders(Array.isArray(data.orders) ? data.orders : []);
+      const loaded = await fetchOrdersList();
+      setOrders(loaded);
     } catch (err: unknown) {
       setOrdersError(
         err instanceof Error ? err.message : 'Sifariş siyahısını yükləmək mümkün olmadı.'
@@ -117,15 +114,10 @@ export default function App() {
   };
 
   const handleUpdateOrderStatus = async (orderId: string, status: OrderStatus) => {
-    const response = await fetch(`/api/orders/${orderId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status }),
-    });
-    const data = await response.json();
-    if (response.ok && data.order) {
+    const updatedOrder = await updateServiceOrderStatus(orderId, status);
+    if (updatedOrder) {
       setOrders((prev) =>
-        prev.map((item) => (item.id === orderId ? data.order : item))
+        prev.map((item) => (item.id === orderId ? updatedOrder : item))
       );
     }
   };
@@ -203,7 +195,7 @@ export default function App() {
                 ) : (
                   <div className="w-full rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 aspect-[16/10] lg:aspect-auto lg:h-full">
                     <img
-                      src="/src/assets/images/hero_repair_technician_1795521985797.jpg"
+                      src={heroTechImg}
                       alt="Kondisioner sistemini diaqnostika edən peşəkar usta"
                       referrerPolicy="no-referrer"
                       onError={() => setHeroImageFailed(true)}

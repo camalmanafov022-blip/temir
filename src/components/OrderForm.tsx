@@ -12,6 +12,7 @@ import {
   CATEGORY_LABELS,
   SERVICE_CATALOG,
 } from '../data/services';
+import { createServiceOrder } from '../lib/api';
 import {
   DiagnosticResult,
   OrderUrgency,
@@ -119,38 +120,29 @@ export function OrderForm({
       const estimatedCostAzn =
         attachedDiagnosis?.estimatedCostRangeAzn || activeService.priceRangeAzn;
 
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customerName: customerName.trim(),
-          phone: phone.trim(),
-          district,
-          address: address.trim(),
-          category,
-          issueTitle: issueTitle.trim() || activeService.title,
-          description: description.trim(),
-          urgency,
-          preferredTime,
-          estimatedCostAzn,
-          diagnosticSummary: attachedDiagnosis
-            ? {
-                likelyFault: attachedDiagnosis.likelyFault,
-                severity: attachedDiagnosis.severity,
-                deviceOrArea: attachedDiagnosis.deviceOrArea,
-                estimatedCostRangeAzn: attachedDiagnosis.estimatedCostRangeAzn,
-              }
-            : undefined,
-        }),
+      const createdOrder = await createServiceOrder({
+        customerName: customerName.trim(),
+        phone: phone.trim(),
+        district,
+        address: address.trim(),
+        category,
+        issueTitle: issueTitle.trim() || activeService.title,
+        description: description.trim(),
+        urgency,
+        preferredTime,
+        estimatedCostAzn,
+        diagnosticSummary: attachedDiagnosis
+          ? {
+              likelyFault: attachedDiagnosis.likelyFault,
+              severity: attachedDiagnosis.severity,
+              deviceOrArea: attachedDiagnosis.deviceOrArea,
+              estimatedCostRangeAzn: attachedDiagnosis.estimatedCostRangeAzn,
+            }
+          : undefined,
       });
 
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data?.error || 'Sifariş qeydə alınarkən xəta baş verdi.');
-      }
-
-      setSubmittedOrder(data.order);
-      onOrderCreated(data.order);
+      setSubmittedOrder(createdOrder);
+      onOrderCreated(createdOrder);
       onClearDiagnosis();
       setAddress('');
       setDescription('');

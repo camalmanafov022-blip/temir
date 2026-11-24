@@ -1,4 +1,10 @@
+import heroTechImg from '../assets/images/hero_repair_technician_1795521985797.jpg';
+import appliancesImg from '../assets/images/service_appliances_repair_1795521986233.jpg';
+import plumbingElectricalImg from '../assets/images/service_plumbing_electrical_1795521986897.jpg';
+import tvDiagnosticsImg from '../assets/images/service_tv_diagnostics_1795521985299.jpg';
 import { ServiceCatalogItem, ServiceCategoryId } from '../types';
+
+export { heroTechImg };
 
 export const SERVICE_CATALOG: ServiceCatalogItem[] = [
   {
@@ -9,7 +15,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     subtitle: 'İnverter və klassik split sistemlərin diaqnostikası, qaz dolumu və yuyulması',
     priceRangeAzn: '35 – 120 AZN',
     avgDuration: '45 – 90 dəq',
-    imageUrl: '/src/assets/images/hero_repair_technician_1795521985797.jpg',
+    imageUrl: heroTechImg,
     imageAlt: 'Kondisioner daxili blokunun texniki müayinəsi',
     commonIssues: [
       'Soyutmur və ya zəif vurur (freon sızması)',
@@ -27,7 +33,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     subtitle: 'Baraban, nasos, qızdırıcı element və idarəetmə platasının yerində bərpası',
     priceRangeAzn: '30 – 110 AZN',
     avgDuration: '40 – 80 dəq',
-    imageUrl: '/src/assets/images/service_appliances_repair_1795521986233.jpg',
+    imageUrl: appliancesImg,
     imageAlt: 'Paltaryuyan maşın və usta alətləri',
     commonIssues: [
       'Suyu boşaltmır və ya yığım zamanı sızdırır',
@@ -45,7 +51,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     subtitle: 'Görüntü itməsi, arxa işıqlandırma, T-Con və qida bloku təmiri',
     priceRangeAzn: '45 – 160 AZN',
     avgDuration: '60 – 120 dəq',
-    imageUrl: '/src/assets/images/service_tv_diagnostics_1795521985299.jpg',
+    imageUrl: tvDiagnosticsImg,
     imageAlt: 'Televizor platası və LED işıqlandırma diaqnostikası',
     commonIssues: [
       'Səs var, lakin ekran qaranlıqdır (LED bar yanması)',
@@ -63,7 +69,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     subtitle: 'Boru sızmalarının tapılması, kombi kollektoru, kran və kanalizasiya işləri',
     priceRangeAzn: '25 – 95 AZN',
     avgDuration: '30 – 90 dəq',
-    imageUrl: '/src/assets/images/service_plumbing_electrical_1795521986897.jpg',
+    imageUrl: plumbingElectricalImg,
     imageAlt: 'Santexnika kollektoru və təzyiq ölçən sistem',
     commonIssues: [
       'Divar və ya trap altından su sızması',
@@ -81,7 +87,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     subtitle: 'Qısaqapanma axtarışı, avtomat açarlar, rozetka və işıqlandırma montajı',
     priceRangeAzn: '25 – 90 AZN',
     avgDuration: '30 – 75 dəq',
-    imageUrl: '/src/assets/images/service_plumbing_electrical_1795521986897.jpg',
+    imageUrl: plumbingElectricalImg,
     imageAlt: 'Müasir elektrik paylayıcı şit və avtomat açarlar',
     commonIssues: [
       'Avtomat tez-tez atır və ya faza kəsilir',
@@ -99,7 +105,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     subtitle: 'Qapı-pəncərə tənzimlənməsi, alçıpan, kafel-metlax bərpası və mebel montajı',
     priceRangeAzn: '30 – 140 AZN',
     avgDuration: '45 – 150 dəq',
-    imageUrl: '/src/assets/images/service_appliances_repair_1795521986233.jpg',
+    imageUrl: appliancesImg,
     imageAlt: 'Məişət və ev təmiri üçün usta avadanlıqları',
     commonIssues: [
       'Plastik pəncərə və balkon qapısı sıx bağlanmır / hava keçirir',
